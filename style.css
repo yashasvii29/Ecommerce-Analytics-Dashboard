@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.all-content{
+    background-color:#dee2e6 ;
+    min-height: 100vh;
+}
+#navbar{
+    background-color: #0f084b;
+}
+.dash{
+    margin-left: 30px;   
+}
+h3{    
+    font-weight: bold;
+    font-size: large;
+    margin-left: 20px;
+}
+.shop{
+    color: white;
+}
+#dash-items{
+    margin-left: 20px;
+}
+.nav-item{
+    margin-left: 10px;
+    margin-right: 10px;   
+}
+.nav-item .nav-link{
+    color: white;
+}
+.nav-item .nav-link:hover{   
+    text-decoration: underline;
+  text-underline-position: under;
+  color: white;   
+}
+.user-icon{
+    margin-right: 30px;
+}
+.user-icon:hover{
+    cursor: pointer;
+}
+#tran{
+    width: 40%;
+    background-color: white;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+#fir{
+    margin-top: 10px;
+}
+#cancel{
+    margin-left: 60px;
+    width: 250px;    
+}
+#sec{
+    margin-top: 10px;
+}
+.row {
+    font-size: 1rem;
+}
+.tot{
+    margin-left: 80px;
+}
+#carts{
+    float: left;
+    margin-left: 10px;
+    background-color: white;
+    border-radius: 5px;
+    height: 200px;
+    width: 460px;
+}
+#carts .row{
+    margin-top: 20px;
+    
+}
+.card {
+    border:  solid #ccc;
+    border-radius: 1px;
+    padding: 4px;
+    margin-bottom: 10px;
+  }
+.card-text{
+    padding-left: 65px;
+}
+#abcart{
+    background-color: bisque;
+}
+#abrev{
+    background-color: lightpink;
+}
+#carts h6{
+    text-align: center;
+}
+
+
+
+
