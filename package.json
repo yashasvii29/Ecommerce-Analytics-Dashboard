@@ -1,5 +1,22 @@
 {
   "dependencies": {
-    "chart.js": "^4.4.2"
-  }
+    "chart.js": "^4.4.2",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.19.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.3.1",
+    "nodemon": "^3.1.0"
+  },
+  "name": "ecommerce-analytics-dashboard",
+  "description": "It is an ecommerce analytics dashboard to help online retailers to analyze customers behaviourr, track sales performance, and optimize marketing strategies.\r The dashboard should integrate with e-commerce platforms to collect transactiondata and generate actionable insights for business growth.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
