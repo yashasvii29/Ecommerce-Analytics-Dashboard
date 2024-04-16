@@ -32,15 +32,22 @@ app.get('/orders',(req,res)=>{
 const orderRoutes = require('./routes/orderRoutes');
 const productRoutes = require('./routes/productRoutes');
 const customerRoutes = require('./routes/customerRoutes');
+const Orders = require('./models/Order');
 
-// app.use(orderRoutes);
+app.use(orderRoutes);
 // app.use(productRoutes);
-// app.use(customerRoutes);
+app.use(customerRoutes);
+
+
+
+
 
 const port = 8080;
 
 app.listen(port,()=>{
     console.log(`server connected at port ${port}`);
 })
+
+
 
 
