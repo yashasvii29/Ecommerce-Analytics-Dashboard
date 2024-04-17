@@ -26,7 +26,13 @@ app.use(methodOverride('_method'));
 app.get('/',(req,res)=>{
     res.render('index');
 })
-app.get('/orders',(req,res)=>{
+app.get('/product',(req,res)=>{
+    res.render('product');
+})
+app.get('/customer',(req,res)=>{
+    res.render('customer');
+})
+app.get('/order',(req,res)=>{
     res.render('order');
 })
 const orderRoutes = require('./routes/orderRoutes');
@@ -35,11 +41,12 @@ const customerRoutes = require('./routes/customerRoutes');
 const Orders = require('./models/Order');
 
 app.use(orderRoutes);
-// app.use(productRoutes);
+app.use(productRoutes);
 app.use(customerRoutes);
 
 
-
+const data = require('./seed/dataSeed');
+const dataGen = require('./public/js/dataGenerator');
 
 
 const port = 8080;

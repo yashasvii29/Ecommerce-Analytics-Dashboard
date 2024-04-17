@@ -1,14 +1,10 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    orderId:{
+    orderNumber:{
         type:String,
         require:true
     },
-    // cusID:{
-    //     type:String,
-    //     trquired:true
-    // },
     totalAmount:{
         type:Number,
         required:true
@@ -29,7 +25,7 @@ const orderSchema = new mongoose.Schema({
         type:Boolean,
         require:true
     }
-});
+},{collections:'orders'});
 
 const Orders = mongoose.model( 'Orders',orderSchema);
 module.exports= Orders;

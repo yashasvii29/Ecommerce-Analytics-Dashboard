@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const customerSchema = new mongoose.Schema({
+    orderNumber:{
+        type:String,
+        require:true
+    },
     cusID:{
         type:String,
         requires:true
@@ -21,7 +25,7 @@ const customerSchema = new mongoose.Schema({
         country:String,
         zipcode:Number
     }
-});
+}, { collection: 'customers' });
 
 const Customer = mongoose.model( 'Customer' , customerSchema);
 module.exports=Customer;

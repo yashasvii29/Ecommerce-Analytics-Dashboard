@@ -57,7 +57,7 @@ let revenueChart = new Chart(ctxx, {
         label: 'Net Profit',
         fill: false,
         borderDash: [5, 5],
-        data: [300, 100, 500, 280, 550, 200, 700,800,90,1000,2000,3000],// Revenue data for each month
+        data: [300, 100, 500, 280, 550, 200, 700,1500,90,1000,2000,3000],// Revenue data for each month
         backgroundColor:['green','green','green'],// Background color of the bars
         borderColor:['green','green','green'], // Border color of the bars
         borderWidth: 2, // Border width of the bars

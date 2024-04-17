@@ -8,24 +8,8 @@ const getAllOrders = async(req, res) => {
  
     try{
         const chance = new Chance();
-
-    
-
         // Function to generate random order data
         function generateRandomOrder() {
-          // Generate random customer details
-          const customerName = chance.name();
-          const customerEmail = chance.email();
-          const customerID = chance.guid();
-          const customerAddress = {
-            street: chance.address(),
-              city: chance.city(),
-              state: chance.state(),
-              country: chance.country(),
-              zipCode: chance.zip(),
-          }
-          
-    
           // Generate random product details
           const productName = chance.word();
           const productPrice = chance.integer({ min: 10, max: 100 });
@@ -53,12 +37,12 @@ const getAllOrders = async(req, res) => {
           // Construct order object
           const order = {
             orderId,
-            customer: {
-              cusID: customerID,
-              name: customerName,
-              email: customerEmail,
-              addresss: customerAddress.street +  ', ' + customerAddress.city + ', '+ customerAddress.state +', '+customerAddress.zipCode+', '+customerAddress.country
-            },
+            // customer: {
+            //   cusID: customerID,
+            //   name: customerName,
+            //   email: customerEmail,
+            //   addresss: customerAddress.street +  ', ' + customerAddress.city + ', '+ customerAddress.state +', '+customerAddress.zipCode+', '+customerAddress.country
+            // },
             product: {
               name: productName,
               price: productPrice,
@@ -103,9 +87,10 @@ const getAllOrders = async(req, res) => {
 
 
 const getOrderById = async(req,res)=>{
-    const {id} = req.params; // is m uss order ki _id aayegi
+   
     try{
         // Logic to fetch order by ID from the database
+        const {id} = req.params; // is m uss order ki _id aayegi
         const order  = await Order.findById(id);
         console.log(req.params);
         if(!order){
@@ -142,3 +127,32 @@ const getOrderById = async(req,res)=>{
   
 
 module.exports = {getAllOrders,getOrderById,getOrdersByDateRange};
+
+
+
+
+
+// const express = require('express');
+// const  router = express.Router();
+// const Order = require('../models/Order');
+
+// exports.getOrders = async (req, res, next) => {
+//   try {
+//     // Retrieve orders from the database
+//     const orders = await Order.find();
+
+//     // Calculate total revenue
+//     let totalRevenue = 0;
+//     orders.forEach(order => {
+//       if (order.totalAmount) { // Check if totalAmount property exists
+//         totalRevenue += order.totalAmount;
+//       }
+//     });
+
+//     // Render the orders.ejs template with orders data and total revenue
+//     res.render('order', { orders: orders, totalRevenue: totalRevenue });
+//   } catch (error) {
+//     // If an error occurs, pass it to the error handler middleware
+//     next(error);
+//   }
+// };
