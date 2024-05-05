@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Customers Analytics</title>
 </head>
 <link rel="stylesheet" href="/css/other.css">
 <style>
     .box{
-        width: 20vw;
+        width: 15vw;
     }
 </style>
 <body>
@@ -21,54 +22,87 @@
         <h3>AmatShop</h3>
         <div class="pageLinks">
             <a href="/">Dashboard</a>
-            <a href="/product">Products</a>
-            <a href="/order">Orders</a>
-            <a href="">Customers</a>
+            <a href="/products">Products</a>
+            <a href="/orders">Orders</a>
+            <a href="" class="active" style="text-decoration: underline;">Customers</a>
         </div>
         <div class="user">
-            <img src="" alt="u">
+            <img src="../public/images/user.png" alt="">
         </div>
     </header>
 
     <main>
         <div class="boxes">
             <div class="box">
-                <h5>Revenue</h5>
-                <h4>Total Amount</h4>
-                <h6>Profit %</h6>
+                <h5>Total Revenue</h5>
+                <h4>$<%= totalRevenue%></h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
-                <h5>Customers</h5>
-                <h4>Total Number</h4>
-                <h6>Profit %</h6>
+                <h5>Total Customers</h5>
+                <h4><%= numberOfCustomers%></h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
                 <h5>Repeat Purchase Rate</h5>
-                <h4>Total rate</h4>
-                <h6>Profit %</h6>
+                <h4><%= repeatPurchaseRate%> %</h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
                 <h5>Cancellation Rate</h5>
-                <h4>Total rate</h4>
-                <h6>Profit %</h6>
-            </div>
-            <!-- <div class="box">
-                <h5>Discounts</h5>
-                <h4>Total Amount</h4>
-                <h6>Profit %</h6>
+                <h4><%= cancellationRate%> %</h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
-                <h5>Refund</h5>
-                <h4>Total Amount</h4>
-                <h6>Profit %</h6>
-            </div> -->
-            
+                <h5>Abandoned Carts</h5>
+                <h4><%= abandonedCarts%> %</h4>
+                <!-- <h6>Profit %</h6> -->
+            </div>
         </div>
-
         <div class="graph">
-            graph of revenue and order
+            <h2> graph of Customers</h2>
+            <canvas id="ecommerceChart"></canvas>
+           
         </div>
+        <script>
+            var ctx = document.getElementById('ecommerceChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Customers',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)', // Blue color for customers line
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        <!-- borderWidth: 1, -->
+                        data: Array(12).fill(0) // Initialize with 0 customers for each month
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+    
+            // Function to update chart data
+            function updateChart() {
+                // Fetch new data for customers (replace with your actual data fetching logic)
+                var newCustomersData = Array.from({ length: 12 }, () => Math.floor(Math.random() * 3000)); // Sample new customers data for each month
+    
+                // Update chart data for customers
+                myChart.data.datasets[0].data = newCustomersData;
+                myChart.update();
+            }
+    
+            // Update chart data every 5 seconds
+            setInterval(updateChart, 5000); // Change interval as needed
+        </script>
     </main>
 </body>
-
+<script src="/js/dataGenerator.js"></script>
 </html>

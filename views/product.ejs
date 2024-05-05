@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/other.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Products Analytics</title>
+
 </head>
-<link rel="stylesheet" href="/css/other.css">
+
 
 <body>
     <div class="upper"></div>
@@ -17,54 +20,93 @@
         <h3>AmatShop</h3>
         <div class="pageLinks">
             <a href="/">Dashboard</a>
-            <a href="">Products</a>
-            <a href="/order">Orders</a>
-            <a href="/customer">Customers</a>
+            <a href="" class="active">Products</a>
+            <a href="/orders">Orders</a>
+            <a href="/customers">Customers</a>
             <!-- <a href="/sales">Sales</a> -->
         </div>
         <div class="user">
-            <img src="" alt="u">
+            <img src="../public/images/user.png" alt="u">
         </div>
     </header>
 
     <main>
         <div class="boxes">
             <div class="box">
-                <h5>Revenue</h5>
-                <h4>Total Amount</h4>
-                <h6>Profit %</h6>
+                <h5>Total Revenue</h5>
+                <h4>$<%= totalRevenue%></h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
                 <h5>Quantity</h5>
-                <h4>Total Number</h4>
-                <h6>Profit %</h6>
+                <h4><%= totalQuantity%></h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
                 <h5>Distinct Products</h5>
-                <h4>Total Number</h4>
-                <h6>Profit %</h6>
+                <h4><%= numberOfUniqueProducts%></h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
                 <h5>Avg. Product Price</h5>
-                <h4>Total price</h4>
-                <h6>Profit %</h6>
+                <h4>$<%= avgProductPrice%></h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
                 <h5>Markup</h5>
-                <h4>Total %</h4>
-                <h6>Profit %</h6>
+                <h4><%=markUpPercentage%>%</h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             <div class="box">
-                <h5>Profit Margin</h5>
-                <h4>Total %</h4>
-                <h6>Profit %</h6>
+                <h5>Gross Profit Margin</h5>
+                <h4><%= grossProfitMargin%> %</h4>
+                <!-- <h6>Profit %</h6> -->
             </div>
             
         </div>
 
         <div class="graph">
-            graph of revenue and avg product price
+            <h2>graph of avg product price</h2>
+            <canvas id="ecommerceChart"></canvas>
         </div>
+        <script>
+            var ctx = document.getElementById('ecommerceChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Average Product Price',
+                        backgroundColor: ['palegreen','palegreen','palegreen'], // Red color for average product price line
+                        borderColor: ['blue','blue','blue'],
+                        borderWidth: 2,
+                        data: Array(12).fill(0) // Initialize with 0 average product price for each month
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+    
+            // Function to update chart data
+            function updateChart() {
+                // Fetch new data for average product price (replace with your actual data fetching logic)
+                var newAvgPriceData = Array.from({ length: 12 }, () => Math.random() * 5000); // Sample new average product price data for each month
+    
+                // Update chart data for average product price
+                myChart.data.datasets[0].data = newAvgPriceData;
+                myChart.update();
+            }
+    
+            // Update chart data every 5 seconds
+            setInterval(updateChart, 5000); // Change interval as needed
+        </script>
     </main>
 </body>
 

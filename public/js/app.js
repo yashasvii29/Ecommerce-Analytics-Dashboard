@@ -57,6 +57,7 @@ let revenueChart = new Chart(ctxx, {
         label: 'Net Profit',
         fill: false,
         borderDash: [5, 5],
+        data: [],
         data: [300, 100, 500, 280, 550, 200, 700,1500,90,1000,2000,3000],// Revenue data for each month
         backgroundColor:['green','green','green'],// Background color of the bars
         borderColor:['green','green','green'], // Border color of the bars
@@ -78,6 +79,19 @@ let revenueChart = new Chart(ctxx, {
         }
     }
 });
+// function fetchData() {
+//     fetch('/profit/all') // Fetch monthly profit data from server
+//         .then(response => response.json())
+//         .then(data => {
+//             profitChart.data.datasets[0].data = data.profit;
+//             profitChart.update(); // Update the chart
+//         })
+//         .catch(error => console.error('Error fetching data:', error));
+// }
+
+// // Fetch data initially and then every 5 seconds
+// fetchData();
+// setInterval(fetchData, 4000);
 
 
 

@@ -18,12 +18,9 @@ const customerSchema = new mongoose.Schema({
         require:true,
         unique:true
     },
-    address:{
-        street:String,
-        city:String,
-        state:String,
-        country:String,
-        zipcode:Number
+    addresss:{
+        type:String,
+        required:true
     }
 }, { collection: 'customers' });
 

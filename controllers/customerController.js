@@ -1,93 +1,64 @@
-const express = require('express');
+const Order = require("../models/Order");
 const Customer = require('../models/Customer');
-// const Chance = require('chance');
-// Function to get all customers
-const getAllCustomers = async(req, res) => {
-   
-    
-    try{
-    //     const chance = new Chance();
 
-    //     function generateRandomCustomer(){
-    //         const customerName = chance.name();
-    //         const customerEmail = chance.email();
-    //         const customerID = chance.guid();
-    //         const customerAddress = {
-    //           street: chance.address(),
-    //             city: chance.city(),
-    //             state: chance.state(),
-    //             country: chance.country(),
-    //             zipCode: chance.zip(),
-    //         }
-           
-    //         const customer = {
-    //           customerName,
-    //           customerEmail,
-    //           customerID,
-    //           customerAddress
-    //         };
-           
-    //         return customer;
-    //     }
-    //     const customers=[];
-    //     function generateRandomCustomers(count){
-    //         for (let i = 0; i < count; i++) {
-    //             const customer = generateRandomCustomer();
-    //             customers.push(customer);
-    //           }
-    //           return customers;
-    //     }
-    //     const randomCustomers = generateRandomCustomers(5);
-        // await Customer.insertMany(randomCustomers);
-        const allCustomers = await Customer.find({});
-        res.send(allCustomers);
+getCustomers = async (req, res, next) => {
+  try {
+    let customers = await Customer.find();
+    const orders = await Order.find();
+    let totalRevenue = 0;
+    orders.forEach((order) => {
+      if (order.totalAmount) {
+        totalRevenue += order.totalAmount;
+      }
+    });
 
-}       
-    
-    catch(err){
-        console.log(err.message);
-        res.status(500).json({ msg: 'Server error' });
-    }
-    
-};
+    // Calculate number of unique customers
+    const uniqueCustomers = {};
+    customers.forEach((customer) => {
+      if (!uniqueCustomers[customer.orderNumber]) {
+        uniqueCustomers[customer.orderNumber] = true;
+      }
+    });
+    const numberOfCustomers = Object.keys(uniqueCustomers).length;
 
-// Function to get customer by ID
-const getCustomerById = async(req, res) => {
-    try{
-        // Logic to fetch customer by ID from the database
-        const {id} = req.params; // is m uss order ki _id aayegi
-        const customer  = await Customer.findById(id);
-        // console.log(req.params);
-        if(!customer){
-            return res.status(400).json({msg:'Customer not found'});
+    //cancellation rate
+    let cancelled = await Order.find({orderStatus:'cancel'});
+    const cancellationRate = ((cancelled.length/numberOfCustomers)*100).toFixed(2);
+    
+    // Count the number of distinct customers
+    const distinctCustomers = new Set(customers.map(customer => customer.cusID));
+
+    // Count the number of customers making repeat purchases
+    let repeatCustomers = 0;
+    distinctCustomers.forEach(cusID => {
+      const customerOrders = customers.filter(customer => customer.cusID === cusID);
+      if (customerOrders.length > 1) { // Check if the customer has made more than one purchase
+        repeatCustomers++;
+      }
+    });
+
+    // Calculate repeat purchase rate
+    const totalCustomers = distinctCustomers.size;
+    const repeatPurchaseRate = ((repeatCustomers / totalCustomers) * 100).toFixed(2);
+
+    //abandoned carts
+    let abandonedCarts = 0;
+    orders.forEach((order)=>{
+      if(order.hasVisitedWebsite == true && order.
+        hasAddedToCart == false){
+          abandonedCarts += 1;
         }
-        res.send(customer);
-    }
-    catch(err){
-        console.error(err.message);
-        res.status(500).json({ msg: 'Server error' });
+    });
+
+    res.render("customer", {
+      totalRevenue: totalRevenue,
+      numberOfCustomers:numberOfCustomers,
+      cancellationRate:cancellationRate,
+      repeatPurchaseRate:repeatPurchaseRate,
+      abandonedCarts:abandonedCarts
+    });
+  } catch (error) {
+    next(error);
   }
 };
-
-// Function to get customers by location
-const getCustomersByLocation = async(req, res) => {
-    try {
-        const {location} = req.params;
-    
-        const customers = await Customer.find({
-            "customerAddress.city": location // Query based on the city field within customerAddress
-        });
-        if(!customers){
-            return res.status(400).json({msg:'Customer not found with this location'});
-        }
-        console.log(customers);
-        res.send(customers);
-      } 
-      catch (err) {
-        console.log(err.message);
-        res.status(500).json({ msg: 'Server error' });
-      }
-    // Logic to fetch customers by location from the database
-};
-
-module.exports = { getAllCustomers,getCustomerById,getCustomersByLocation };
+module.exports={getCustomers};

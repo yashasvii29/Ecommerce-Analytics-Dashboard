@@ -24,6 +24,10 @@ const orderSchema = new mongoose.Schema({
     hasAddedToCart:{
         type:Boolean,
         require:true
+    },
+    mode:{
+        type:String,
+        required:true
     }
 },{collections:'orders'});
 

@@ -1,78 +1,91 @@
 const mongoose = require("mongoose");
-const Customer = require("../models/Customer");
+
 const dataGenerated = require("../public/js/dataGenerator");
 
 let orders = dataGenerated.randomOrders;
-console.log("dataSeed : ",orders);
+
+const Customer = require("../models/Customer");
 
 function saveCustomers(orders) {
-  orders.forEach((order, index) => {
+  orders.forEach((order) => {
     const customerData = order.customer;
+    const on = order;
     const customer = new Customer({
-      cusId: customerData.cusId,
+      orderNumber: on.orderNumber,
+      cusID: customerData.cusID,
       name: customerData.name,
       email: customerData.email,
-      address: customerData.address,
+      addresss: customerData.addresss,
     });
-
     customer
-      .save()
-      .then((savedCustomer) => {
-        console.log(savedCustomer);
+    .save()
+    .then((savedCustomer) => {
+        console.log("customers data saved sucessfully");
       })
-      // console.error(`Error saving customer ${index + 1}/${orders.length}:`, error);
-
-
+      .catch((error) => {
+        console.error(error);
+      });
   });
 }
+
 saveCustomers(orders);
-const Product = require('../models/Product');
+
+const Product = require("../models/Product");
 
 function saveProducts(orders) {
-    orders.forEach((order) => {
-      const productData = order.product;
-      const product = new Product({
-        name: productData.name,
-        price: productData.price,
-        quantity: productData.quantity,
-      });
-  
-      product
-        .save()
-        .then((savedProducts) => {
-          console.log(savedProducts);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  orders.forEach((order) => {
+    const productData = order.product;
+    const on = order;
+    const product = new Product({
+      orderNumber: on.orderNumber,
+      name: productData.name,
+      price: productData.price,
+      quantity: productData.quantity,
+      rating: productData.rating,
+      category: productData.category,
+      originalPrice: productData.originalPrice,
+      costPrice: productData.costPrice,
     });
-  }
-  
-  saveProducts(orders);
 
-const  Order = require("../models/Order");
+    product
+      .save()
+      .then((savedProducts) => {
+        console.log("products data saved sucessfully");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+}
+
+saveProducts(orders);
+
+const Order = require("../models/Order");
 
 function saveOrders(orders) {
-    orders.forEach((order) => {
-      const orderData = order;
-      const orderDetail = new Order({
-        orderNumber : orderData.orderNumber,
-        totalAmount : orderData.totalAmount,
-        orderDate: orderData.orderDate ,
-        orderStatus:orderData.orderStatus,
-        hasVisitedWebsite:orderData.hasVisitedWebsite,
-        hasAddedToCart:orderData.hasAddedToCart
-      });
-  
-      orderDetail
-        .save()
-        .then((savedOrders) => {
-          console.log(savedOrders);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  orders.forEach((order) => {
+    const orderData = order;
+    const orderDetail = new Order({
+      orderNumber: orderData.orderNumber,
+      totalAmount: orderData.totalAmount,
+      orderDate: orderData.orderDate,
+      orderStatus: orderData.orderStatus,
+      hasVisitedWebsite: orderData.hasVisitedWebsite,
+      hasAddedToCart: orderData.hasAddedToCart,
+      mode:orderData.mode
     });
-  }
-  
-  saveOrders(orders);
+
+    orderDetail
+      .save()
+      .then((savedOrders) => {
+        console.log("orders data saved sucessfully");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+}
+
+saveOrders(orders);
+
+

@@ -24,13 +24,13 @@
                         <a class="nav-link" href="#">Dashboard</a>
                       </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/product">Products</a>
+                    <a class="nav-link" href="/products">Products</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/order">Orders</a>
+                    <a class="nav-link" href="/orders">Orders</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/customer">Customers</a>
+                    <a class="nav-link" href="/customers">Customers</a>
                   </li>
                 
                   
@@ -81,13 +81,13 @@
                         <div id="cancel" class="col-md-4">
                              <h6>Cancellation</h6>
                              <div>
-                                <span>customers</span>
-                                <span class="tot">total</span>
-                             </div>
-                             <div>
-                                <span>declined</span>
-                                <span class="tot">total</span>
-                             </div>
+                              <span>customers</span>
+                              <span class="tot"><%= numberOfCustomers%></span>
+                           </div>
+                           <div>
+                              <span>declined</span>
+                              <span class="tot"><%= cancelledNumber%></span>
+                           </div>
                              
                         </div>
                     </div>
@@ -101,11 +101,11 @@
                             <h6>Cancellation</h6>
                             <div>
                                 <span>customers</span>
-                                <span class="tot">total</span>
+                                <span class="tot"><%= numberOfCustomers-6%></span>
                              </div>
                              <div>
                                 <span>declined</span>
-                                <span class="tot">total</span>
+                                <span class="tot"><%= cancelledNumber-2%></span>
                              </div>
                         </div>
                     </div>
@@ -121,8 +121,8 @@
                   <h6>Abandoned Carts</h6>
                   <div id="abcart" class="card">
                     <div  class="card-body">
-                      <span class="card-text">Total</span>
-                      <p class="card-text">%</p> 
+                      <span class="card-text"><%= abandonedCarts%> %</span>
+                      <!-- <p class="card-text"><%= abandonedCarts%> %</p>  -->
                     </div>
                   </div>
                 </div>
@@ -130,8 +130,8 @@
                   <h6>Abandoned Revenue</h6>
                   <div  id="abrev"  class="card">
                     <div class="card-body">
-                      <span class="card-text">Total</span>
-                      <p class="card-text">%</p>
+                      <span class="card-text">$ <%= abandonedOrdersAmount%></span>
+                      <!-- <p class="card-text">%</p> -->
                     </div>
                   </div>
                 </div>
