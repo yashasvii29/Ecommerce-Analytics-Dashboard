@@ -91,3 +91,10 @@ header h3{
     border-radius: 10px;
     background: rgb(224, 223, 223);
 }
+.user-icon{
+    margin-left: 500px;
+   
+}
+.user-icon:hover{
+    cursor: pointer;
+}
